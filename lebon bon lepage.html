@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ode to the King - LeBron James</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #f0f0f0;
+            background-image: url('https://pbs.twimg.com/media/GCkmFTzbQAAzD1p.jpg'),
+                              linear-gradient(45deg, rgba(74, 14, 96, 0.85), rgba(128, 0, 128, 0.8), rgba(74, 14, 96, 0.85), rgba(160, 64, 160, 0.8));
+            background-size: cover, 400% 400%;
+            background-position: center center, 0% 50%;
+            background-repeat: no-repeat, repeat;
+            background-attachment: fixed, fixed;
+            animation: gradientBG 15s ease infinite;
+            overflow-x: hidden; /* ONLY hide horizontal scrollbars */
+            cursor: none;
+            padding: 0 100px; /* Padding for side images */
+            min-height: 100vh;
+        }
+
+        /* Custom Cursor */
+        .custom-cursor {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 25px;
+            height: 25px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%23FF8C00" stroke="%23000000" stroke-width="5"/><line x1="15" y1="50" x2="85" y2="50" stroke="%23000000" stroke-width="5"/><line x1="50" y1="15" x2="50" y2="85" stroke="%23000000" stroke-width="5"/><path d="M 15 35 C 35 20, 65 20, 85 35" stroke="%23000000" stroke-width="5" fill="none"/><path d="M 15 65 C 35 80, 65 80, 85 65" stroke="%23000000" stroke-width="5" fill="none"/></svg>');
+            background-size: contain;
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 10000;
+            will-change: left, top;
+            opacity: 0;
+            transition: transform 0.1s ease-out;
+        }
+        body:hover .custom-cursor {
+            opacity: 1;
+        }
+
+        /* Background Animation */
+        @keyframes gradientBG {
+            0% { background-position: center center, 0% 50%; }
+            50% { background-position: center center, 100% 50%; }
+            100% { background-position: center center, 0% 50%; }
+        }
+
+        /* Side Images */
+        .side-image {
+            position: fixed;
+            max-width: 180px;
+            height: auto;
+            z-index: 5;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease-out, opacity 0.3s ease;
+            opacity: 0.9;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        .side-image:hover {
+            transform: scale(1.1);
+            opacity: 1;
+            z-index: 6;
+        }
+        #side-img-left-1 { left: 30px; top: 100px; transform-origin: center center; }
+        #side-img-left-2 { left: 40px; top: 350px; max-width: 150px; }
+        #side-img-right-1 { right: 30px; top: 150px; max-width: 160px; }
+        #side-img-right-2 { right: 40px; top: 400px; max-width: 170px; }
+
+        /* Container */
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            position: relative;
+            z-index: 10;
+            transition: opacity 0.5s ease, visibility 0s linear 0.5s;
+        }
+
+        /* Hide elements in Goon Mode */
+        body.goon-mode-active .container,
+        body.goon-mode-active .side-image,
+        body.goon-mode-active #audio-controls,
+        body.goon-mode-active #goon-btn,
+        body.goon-mode-active .particle-container
+        {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+        }
+
+        /* Header, Video, Audio Controls, Sections, etc. */
+        header { text-align: center; margin-bottom: 20px; padding: 20px; border-bottom: 3px solid #FFD700; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        header:hover { transform: scale(1.02); box-shadow: 0 0 25px #FFD700; }
+        header h1 { font-size: 3em; color: #FFD700; margin-bottom: 10px; text-shadow: 2px 2px 5px rgba(0,0,0,0.7); cursor: pointer; transition: color 0.3s, text-shadow 0.3s; }
+        header h1:hover { color: #fff; text-shadow: 0 0 15px #FFD700, 0 0 25px #FFD700; }
+        header .subtitle { font-size: 1.5em; font-style: italic; color: #f0e68c; cursor: default; transition: letter-spacing 0.3s ease; }
+        header .subtitle:hover { letter-spacing: 2px; }
+        .video-container { margin: 25px auto; max-width: 480px; aspect-ratio: 9 / 16; background-color: #000; border-radius: 10px; overflow: hidden; box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3); transition: transform 0.3s ease, box-shadow 0.3s ease; position: relative; }
+        .video-container:hover { transform: scale(1.03); box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5); }
+        #lebron-video { display: block; width: 100%; height: 100%; object-fit: cover; }
+        #audio-controls { display: flex; align-items: center; justify-content: center; padding: 10px 0 25px 0; gap: 15px; background-color: rgba(0, 0, 0, 0.3); border-radius: 8px; margin: 25px auto 30px auto; max-width: 300px; transition: opacity 0.5s ease, visibility 0s linear 0.5s; }
+        #mute-btn { padding: 8px 15px; font-size: 1em; font-weight: bold; cursor: pointer; border: 2px solid #FFD700; background-color: rgba(128, 0, 128, 0.7); color: #FFD700; border-radius: 5px; transition: background-color 0.3s, color 0.3s, transform 0.2s; min-width: 80px; text-align: center; }
+        #mute-btn:hover { background-color: #FFD700; color: #4a0e60; transform: scale(1.05); }
+        #volume-slider { cursor: pointer; width: 150px; height: 10px; appearance: none; background: linear-gradient(to right, #FFD700 0%, #FFD700 var(--value-percent, 50%), #555 var(--value-percent, 50%), #555 100%); border-radius: 5px; outline: none; transition: background 0.1s ease-in-out; }
+        #volume-slider::-webkit-slider-thumb { appearance: none; width: 20px; height: 20px; background: #f0f0f0; border: 2px solid #800080; border-radius: 50%; cursor: pointer; transition: transform 0.2s ease; }
+        #volume-slider:active::-webkit-slider-thumb { transform: scale(1.2); }
+        #volume-slider::-moz-range-thumb { width: 18px; height: 18px; background: #f0f0f0; border: 2px solid #800080; border-radius: 50%; cursor: pointer; transition: transform 0.2s ease; }
+        #volume-slider:active::-moz-range-thumb { transform: scale(1.2); }
+        section { margin-bottom: 35px; padding: 25px; background-color: rgba(255, 255, 255, 0.08); border-radius: 10px; transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease, opacity 0.5s ease, visibility 0s linear 0.5s; opacity: 0; transform: translateY(20px); animation: fadeInScroll 0.8s forwards ease-out; animation-play-state: paused; }
+        @keyframes fadeInScroll { to { opacity: 1; transform: translateY(0); } }
+        section:hover { transform: translateY(-5px) scale(1.01); background-color: rgba(255, 255, 255, 0.12); box-shadow: 0 5px 20px rgba(255, 215, 0, 0.3); }
+        section h2 { font-size: 2em; color: #FFD700; margin-bottom: 15px; border-bottom: 1px solid #800080; padding-bottom: 5px; cursor: help; transition: color 0.3s, border-color 0.3s; }
+        section h2:hover { color: #fff; border-color: #FFD700; }
+        p { margin-bottom: 15px; font-size: 1.1em; cursor: text; transition: color 0.3s ease; }
+        p:hover { color: #fff; }
+
+        /* Interactive Base Styles */
+        .interactive {
+            font-weight: bold;
+            color: #f0e68c; /* Default interactive color */
+            cursor: pointer;
+            position: relative;
+            display: inline-block;
+            transition: color 0.3s, transform 0.2s, text-shadow 0.3s; /* Add text-shadow to base transition */
+            padding: 0 2px;
+        }
+        /* Interactive Base Hover */
+        .interactive:hover {
+            /* Don't apply generic color change here */
+            transform: scale(1.1);
+            text-shadow: 0 0 8px #FFD700; /* Default gold shadow */
+        }
+        /* Interactive Underline Effect (Keep as is) */
+        .interactive::after { content: ''; position: absolute; width: 0; height: 2px; display: block; margin-top: 2px; right: 0; background: #FFD700; transition: width 0.4s ease; -webkit-transition: width 0.4s ease; }
+        .interactive:hover::after { width: 100%; left: 0; background: #fff; }
+
+        /* Specific Interactive Hover Styles */
+        .pookie:hover { color: #ff69b4; text-shadow: 0 0 10px #ff69b4; }
+        .king:hover { color: #FFD700; text-shadow: 0 0 10px #FFD700; }
+        .goat:hover { color: #add8e6; text-shadow: 0 0 10px #add8e6;}
+        .drive:hover { color: #ff8c00; text-shadow: 0 0 10px #ff8c00; }
+        .jumpshot:hover { color: #90ee90; text-shadow: 0 0 10px #90ee90; }
+        .heartbreak:hover { color: #b22222; text-shadow: 0 0 10px #dc143c; }
+        .ring:hover { color: #f0e68c; text-shadow: 0 0 10px #eee8aa;}
+        .homecoming:hover { color: #add8e6; text-shadow: 0 0 10px #87ceeb; }
+        .history:hover { color: #f8f8ff; text-shadow: 0 0 15px #fff; }
+        /* Generic interactives not specifically styled above */
+        .freeze-time:hover, .resilience:hover, .family-man:hover,
+        .retire:hover, .sacrifice:hover, .my-world:hover {
+             color: #FFD700; /* Restore gold hover color */
+             /* Inherits gold text-shadow from .interactive:hover */
+         }
+
+        .cleveland { /* Style for the Cleveland quote */
+            color: #8B0000; /* Dark Red text */
+            background-color: #FFD700; /* Gold background */
+            padding: 2px 5px;
+            border-radius: 3px;
+            /* Prevent selection */
+            -webkit-user-select: none; /* Safari */
+            -moz-user-select: none;    /* Firefox */
+            -ms-user-select: none;     /* IE 10+ */
+            user-select: none;         /* Standard */
+            /* Inherit base interactive transitions but override specifics */
+            transition: transform 0.2s, box-shadow 0.3s;
+        }
+        .cleveland:hover {
+            transform: scale(1.15); /* Keep the scale effect */
+            box-shadow: 0 0 15px #FFD700; /* Keep the gold glow */
+            /* --- FIX --- */
+            text-shadow: none !important; /* Explicitly remove ANY text shadow, important for specificity */
+            color: #8B0000 !important; /* Explicitly keep the text color dark red */
+        }
+
+        .emojis { font-size: 1.5em; text-align: center; margin-top: 20px; cursor: pointer; transition: transform 0.3s ease; }
+        .emojis span { display: inline-block; transition: transform 0.2s ease-in-out; padding: 0 5px; }
+        .emojis:hover span { transform: scale(1.5) rotate(15deg); }
+        .emojis span:hover { transform: scale(2) rotate(-15deg); }
+        .hidden-detail { display: none; font-style: italic; color: #ccc; margin-top: 5px; padding-left: 15px; border-left: 2px solid #FFD700; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Particle Container & Particles */
+        .particle-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999; overflow: hidden; transition: opacity 0.3s ease, visibility 0s linear 0.3s; }
+        .particle { position: absolute; font-size: 10px; opacity: 0.8; pointer-events: none; animation: flyOut 1s ease-out forwards; width: auto; height: auto; background: none !important; border: none !important; border-radius: 0; }
+        @keyframes flyOut { 0% { transform: translate(0, 0) scale(1); opacity: 0.8; } 100% { transform: translate(var(--tx, 0), var(--ty, -80px)) scale(0); opacity: 0; } }
+
+        /* Goon Mode Overlay Styles */
+        #goon-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 5000;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            overflow: hidden;
+            cursor: crosshair;
+        }
+        body.goon-mode-active #goon-overlay {
+            display: flex;
+            opacity: 1;
+        }
+
+        #goon-image-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #goon-image-container img#main-goon-image {
+            max-width: 90vw;
+            max-height: 85vh;
+            object-fit: contain;
+            display: block;
+            z-index: 5001;
+            pointer-events: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* Goon Image Shake Animation */
+        @keyframes goonImageShake {
+            0%, 100% { transform: translateX(0) rotate(0); }
+            25% { transform: translateX(-2px) rotate(-0.5deg); }
+            50% { transform: translateX(2px) rotate(0.5deg); }
+            75% { transform: translateX(-2px) rotate(-0.5deg); }
+        }
+        img#main-goon-image.shake-goon-image {
+            animation: goonImageShake 0.3s linear 1;
+        }
+
+        #back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 18px;
+            font-size: 1em;
+            font-weight: bold;
+            background-color: #f0f0f0;
+            color: #333;
+            border: 2px solid #aaa;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 5100;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        #back-btn:hover { background-color: #ddd; transform: scale(1.05); }
+        #back-btn:active { transform: scale(0.98); }
+
+        /* Goon Mode Splash Images */
+        .goon-splash {
+            position: absolute;
+            height: auto;
+            opacity: 1;
+            pointer-events: none;
+            z-index: 5050;
+            filter: drop-shadow(1px 1px 2px rgba(255,255,255,0.3));
+            transition: opacity 2s ease-out; /* 2 second fade-out */
+            /* Prevent selection */
+            -webkit-user-select: none; /* Safari */
+            -moz-user-select: none;    /* Firefox */
+            -ms-user-select: none;     /* IE 10+ */
+            user-select: none;         /* Standard */
+        }
+
+        /* Footer */
+        footer { text-align: center; margin-top: 40px; padding: 20px 20px 60px 20px; border-top: 3px solid #FFD700; transition: transform 0.3s ease, box-shadow 0.3s ease; position: relative; }
+        footer:hover { transform: scale(1.02); box-shadow: 0 0 25px #FFD700; }
+        footer p { font-size: 1.2em; color: #f0e68c; }
+
+        /* Goon Button Style */
+        #goon-btn {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            padding: 5px 10px;
+            font-size: 0.8em;
+            font-weight: bold;
+            background-color: #4a0e60;
+            color: #FFD700;
+            border: 1px solid #FFD700;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1001;
+            transition: background-color 0.3s, transform 0.1s, opacity 0.5s ease, visibility 0s linear 0.5s;
+        }
+        #goon-btn:hover { background-color: #FFD700; color: #4a0e60; transform: scale(1.1); }
+        #goon-btn:active { transform: scale(0.95); }
+
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0; }
+
+        /* Responsive Adjustments */
+        @media (max-width: 1200px) { body { padding: 0 15px; } .side-image { display: none; } .container { margin-left: auto; margin-right: auto; } }
+        @media (max-width: 768px) { header h1 { font-size: 2.5em; } header .subtitle { font-size: 1.2em; } section h2 { font-size: 1.8em; } .video-container { max-width: 90%; } #audio-controls { max-width: 90%; } #goon-btn { font-size: 0.7em; padding: 4px 8px; } #back-btn { padding: 8px 12px; font-size: 0.9em;} }
+
+    </style>
+</head>
+<body>
+
+    <div class="custom-cursor"></div>
+    <div class="particle-container"></div>
+
+    <!-- Side Images -->
+    <img src="https://a.espncdn.com/combiner/i?img=/i/headshots/nba/players/full/1966.png" alt="LeBron James Headshot" class="side-image" id="side-img-left-1" data-volume-target>
+    <img src="https://foxy1069.com/wp-content/uploads/2025/04/17430782880424-MSzSiX.jpeg" alt="LeBron James Lakers Jersey" class="side-image" id="side-img-left-2">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTd4M9IWJS3N1l4-6jvFN05YGw-stb3ppum3aCcFMfuLN1ukEOB9Fg7iSEbDWeArtF6Fnk&usqp=CAU" alt="LeBron James Close Up" class="side-image" id="side-img-right-1">
+    <img src="https://us-tuna-sounds-images.voicemod.net/6a167f96-2a98-4b38-bf9f-1cc941017d9c-1713277926471.jpg" alt="LeBron James Chalk Toss Sketch" class="side-image" id="side-img-right-2">
+
+
+    <!-- Audio Element (Hidden) -->
+    <audio id="bg-audio" loop>
+         <source src="https://files.catbox.moe/rrmfc9.mp3" type="audio/mpeg">
+         Your browser does not support the audio element.
+    </audio>
+
+    <!-- Main Content Container -->
+    <div class="container">
+        <header>
+            <h1 id="main-title">My Glorious King</h1>
+            <p class="subtitle">An Ode to LeBron James</p>
+        </header>
+
+        <div class="video-container">
+            <video id="lebron-video" autoplay loop muted playsinline>
+                <source src="https://files.fileditch.st/s22/sPqxVIKqddwlltTlkWJC.mp4?md5=M6QODXgkNqexJBMTClwQxw&expires=1744888029" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+
+        <div id="audio-controls">
+            <button id="mute-btn">Mute</button>
+            <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5">
+        </div>
+
+        <main>
+             <!-- Sections remain unchanged -->
+            <section id="intro">
+                <h2>Boy oh boy... where to begin?</h2>
+                <p>Lebron… honey, my <span class="interactive pookie" data-particle-type="heart">pookie bear</span>. I have loved you ever since I first laid eyes on you. The way you <span class="interactive drive" data-particle-type="basketball">drive into the paint</span> and strike fear into your enemies eyes. Your <span class="interactive" data-particle-type="star">silky smooth touch</span> around the rim, and that <span class="interactive jumpshot" data-particle-type="star">gorgeous jumpshot</span>.</p>
+                <p>I would do anything for you. I wish it were possible to <span class="interactive freeze-time">freeze time</span> so I would never have to watch you retire. <span class="hidden-detail" id="freeze-time-detail">If only science could catch up to my love!</span></p>
+            </section>
+             <section id="journey">
+                <h2>More Than a Game</h2>
+                <p>You had a <span class="interactive resilience">rough childhood</span>, but you never gave up hope. <span class="hidden-detail" id="resilience-detail">An inspiration to millions overcoming adversity.</span> You are even amazing off the court, you're a <span class="interactive family-man">great husband and father</span>, sometimes I even call you dad. <span class="hidden-detail" id="family-man-detail">Setting an example on and off the hardwood.</span></p>
+                <p>I forvever dread and weep, thinking of the day you will one day <span class="interactive retire">retire</span>. I would <span class="interactive sacrifice">sacrifice my own life</span> if it were the only thing that could put a smile on your beautiful face. <span class="hidden-detail" id="sacrifice-detail">Okay, maybe a bit dramatic, but the sentiment is real! ❤️</span></p>
+            </section>
+             <section id="career">
+                <h2>The Emotional Rollercoaster</h2>
+                <p>You have given me so much joy, and <span class="interactive heartbreak" data-particle-type="broken-heart">heartbreak</span> over the years. I remember when you first left Cleveland and it's like my heart got broken into a million pieces.</p>
+                <p>But a tear still fell from my right eye when I watched you win your <span class="interactive ring" data-particle-type="ring">first ring in Miami</span>, because deep down, my <span class="interactive king" data-particle-type="crown">glorious king</span> deserved it. I just wanted you to return home.</p>
+                <p>Then allas, you did, my <span class="interactive homecoming" data-particle-type="confetti">sweet baby boy came home</span> and I rejoiced. 2015 was a hard year for us baby, but in 2016 you made <span class="interactive history" data-particle-type="trophy">history happen</span>. You came back from 3-1 and I couldn't believe it. I was crying, bawling even, and I heard my glorious king exclaim these words, <strong class="interactive cleveland" id="cleveland-quote">"CLEVELAND, THIS IS FOR YOU!"</strong><span class="hidden-detail" id="cleveland-quote-detail"> chills... literal chills every single time.</span></p>
+            </section>
+             <section id="legacy">
+                <h2>Eternal Impact</h2>
+                <p>Not only have you changed the game of basketball and the world forever, but you've eternally changed <span class="interactive my-world">my world</span>. <span class="hidden-detail" id="my-world-detail">You showed me what passion and dedication look like.</span></p>
+                <p>And now you're getting older, but still the <span class="interactive goat" data-particle-type="goat">GOAT</span>, my <span class="interactive goat" data-particle-type="goat">GOAT</span>. </p>
+                <div class="emojis" aria-label="Love emojis for LeBron">
+                    <span>🥰</span>
+                    <span>❤️</span>
+                    <span>🫶🏽</span>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>I love you <span class="interactive pookie" data-particle-type="heart">pookie bear</span>, my <span class="interactive king" data-particle-type="crown">glorious king</span>, LeBron James.</p>
+        </footer>
+    </div> <!-- End .container -->
+
+    <!-- Goon Mode Overlay -->
+    <div id="goon-overlay">
+        <button id="back-btn">Back</button>
+        <div id="goon-image-container">
+            <img id="main-goon-image" src="https://imagez.tmz.com/image/bb/4by3/2016/02/12/bb13903116da544983509bdf100d72ef_xl.jpg" alt="Goon Mode Image">
+            <!-- Goon splashes will be added here by JS -->
+        </div>
+    </div>
+
+    <!-- Goon Button -->
+    <button id="goon-btn">Goon</button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Get Elements ---
+            const body = document.body;
+            const cursor = document.querySelector('.custom-cursor');
+            const particleContainer = document.querySelector('.particle-container');
+            const sections = document.querySelectorAll('section');
+            const interactives = document.querySelectorAll('.interactive');
+            const interactiveElementsForCursor = document.querySelectorAll('a, button, input[type="range"], .interactive, header h1, section h2, .emojis span, .side-image');
+            const mainTitle = document.getElementById('main-title');
+            const audioElement = document.getElementById('bg-audio');
+            const muteBtn = document.getElementById('mute-btn');
+            const volumeSlider = document.getElementById('volume-slider');
+            const videoElement = document.getElementById('lebron-video');
+            const volumeLebronImg = document.getElementById('side-img-left-1');
+            const goonBtn = document.getElementById('goon-btn');
+            const goonOverlay = document.getElementById('goon-overlay');
+            const backBtn = document.getElementById('back-btn');
+            const goonImageContainer = document.getElementById('goon-image-container');
+            const mainGoonImage = document.getElementById('main-goon-image');
+
+            let audioStarted = false;
+            let isGoonMode = false;
+            let goonImageShakeTimeout = null;
+
+            // --- URLs ---
+            const goonSplashImageUrl = "https://static.vecteezy.com/system/resources/thumbnails/051/225/330/small/close-up-splash-of-white-liquid-isolated-on-a-transparent-background-creating-a-dynamic-and-artistic-impression-png.png";
+
+            // --- Error Handling & Initial Setup ---
+            if (!goonBtn) console.error("Goon button not found!");
+            if (!goonOverlay) console.error("Goon overlay not found!");
+            if (!backBtn) console.error("Back button not found!");
+            if (!goonImageContainer) console.error("Goon image container not found!");
+            if (!cursor) console.error("Custom cursor element not found!");
+            if (!mainGoonImage) console.error("Main Goon Image not found!");
+
+            // --- Custom Cursor ---
+            if (cursor) {
+                document.addEventListener('mousemove', e => {
+                    cursor.style.left = `${e.clientX}px`;
+                    cursor.style.top = `${e.clientY}px`;
+                });
+                cursor.style.opacity = '0';
+                body.addEventListener('mouseover', () => { cursor.style.opacity = '1'; });
+                body.addEventListener('mouseout', (e) => {
+                     if (!e.relatedTarget || e.relatedTarget.nodeName === 'HTML') {
+                        cursor.style.opacity = '0';
+                     }
+                });
+                interactiveElementsForCursor.forEach(el => {
+                    el.addEventListener('mouseenter', () => cursor.style.transform = 'translate(-50%, -50%) scale(1.5)');
+                    el.addEventListener('mouseleave', () => cursor.style.transform = 'translate(-50%, -50%) scale(1)');
+                });
+            }
+
+            // --- Scroll Animation ---
+            const triggerPoint = window.innerHeight * 0.8;
+            function checkSections() {
+                 if (isGoonMode) return;
+                 sections.forEach(s => { if (s.getBoundingClientRect().top < triggerPoint) s.style.animationPlayState = 'running'; });
+            }
+            window.addEventListener('scroll', checkSections);
+            window.addEventListener('load', checkSections);
+
+             // --- Audio Logic ---
+             function tryPlayAudio() {
+                if (audioElement && !audioStarted && audioElement.paused) {
+                     const playPromise = audioElement.play();
+                     if (playPromise !== undefined) {
+                         playPromise.then(() => { audioStarted = true; updateMuteButtonText(); body.removeEventListener('click', tryPlayAudio, { capture: true }); })
+                                    .catch(error => { console.warn("Audio autoplay failed:", error); if (!audioElement.muted) audioElement.muted = true; updateMuteButtonText(); updateVolumeImageScale(); });
+                     }
+                 } else if (audioStarted) { body.removeEventListener('click', tryPlayAudio, { capture: true }); }
+             }
+             if(audioElement) body.addEventListener('click', tryPlayAudio, { capture: true, once: false });
+             function updateMuteButtonText() { if (audioElement && muteBtn) muteBtn.textContent = audioElement.muted || audioElement.volume === 0 ? 'Unmute' : 'Mute'; }
+             function updateVolumeSliderBackground() { if (volumeSlider && audioElement) { const v = audioElement.muted ? 0 : audioElement.volume; volumeSlider.style.setProperty('--value-percent', `${v * 100}%`); } }
+             function updateVolumeImageScale() { if (volumeLebronImg && audioElement) { const v = audioElement.muted ? 0 : audioElement.volume; volumeLebronImg.style.transform = `scale(${1 + (v * 0.2)})`; } }
+             if (muteBtn && audioElement) { muteBtn.addEventListener('click', (e) => { e.stopPropagation(); audioElement.muted = !audioElement.muted; if (!audioElement.muted && audioElement.volume === 0) { audioElement.volume = 0.5; volumeSlider.value = audioElement.volume; } if (!audioElement.muted && !audioStarted && audioElement.paused) tryPlayAudio(); updateMuteButtonText(); updateVolumeSliderBackground(); updateVolumeImageScale(); }); }
+             if (volumeSlider && audioElement) { volumeSlider.addEventListener('input', () => { const v = parseFloat(volumeSlider.value); audioElement.volume = v; audioElement.muted = v === 0; updateMuteButtonText(); updateVolumeSliderBackground(); updateVolumeImageScale(); }); }
+             if (audioElement) { audioElement.volume = parseFloat(volumeSlider?.value ?? 0.5); updateVolumeSliderBackground(); updateMuteButtonText(); updateVolumeImageScale(); audioElement.addEventListener('error', () => console.error("Error loading audio")); audioElement.addEventListener('volumechange', () => { if (!volumeSlider?.matches(':active')) { updateVolumeImageScale(); updateVolumeSliderBackground(); if(volumeSlider) volumeSlider.value = audioElement.muted ? 0 : audioElement.volume; } updateMuteButtonText(); }); }
+             if (videoElement) { videoElement.addEventListener('error', () => console.error("Error loading video")); }
+
+            // --- Interactive Text Clicks ---
+            interactives.forEach(el => { el.addEventListener('click', (e) => { e.stopPropagation(); const pT = el.dataset.particleType; if (pT && particleContainer && !isGoonMode) createParticles(e.clientX, e.clientY, pT); const dId = el.id + '-detail'; const dEl = document.getElementById(dId); if (dEl) dEl.style.display = dEl.style.display === 'block' ? 'none' : 'block'; if (el.id === 'cleveland-quote'){ /* Special Cleveland logic removed as hover handles it */ } }); });
+
+             // --- Particle Creation ---
+            function createParticles(x, y, type = 'star') {
+                 if (!particleContainer || isGoonMode) return;
+                 const particleCount = 10;
+                 for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div'); particle.classList.add('particle'); particle.style.left = `${x}px`; particle.style.top = `${y}px`; let emoji = '✨'; switch (type) { case 'heart': emoji = '❤️'; break; case 'basketball': emoji = '🏀'; break; case 'crown': emoji = '👑'; break; case 'ring': emoji = '💍'; break; case 'trophy': emoji = '🏆'; break; case 'goat': emoji = '🐐'; break; case 'confetti': const ce = ['🎉', '🎊']; emoji = ce[Math.floor(Math.random() * ce.length)]; break; case 'broken-heart': emoji = '💔'; break; case 'star': default: emoji = '✨'; break; } particle.innerHTML = emoji; particle.style.fontSize = `${Math.random() * 10 + 10}px`; const angle = Math.random() * Math.PI * 2; const distance = Math.random() * 50 + 50; particle.style.setProperty('--tx', `${Math.cos(angle) * distance}px`); particle.style.setProperty('--ty', `${Math.sin(angle) * distance - 80}px`); particleContainer.appendChild(particle); particle.addEventListener('animationend', () => { if (particle.parentNode === particleContainer) particle.remove(); });
+                 }
+            }
+
+             // --- Goon Mode Splash ---
+             function spawnGoonSplash() {
+                 if (!goonImageContainer || !isGoonMode) return;
+                 const splash = document.createElement('img');
+                 splash.src = goonSplashImageUrl;
+                 splash.alt = "Goon Splash";
+                 splash.classList.add('goon-splash');
+                 const randomWidth = Math.random() * 200 + 50;
+                 splash.style.width = `${randomWidth}px`;
+                 const overlayRect = goonOverlay.getBoundingClientRect();
+                 const maxLeft = overlayRect.width - randomWidth;
+                 const estimatedHeight = randomWidth;
+                 const maxHeight = overlayRect.height - estimatedHeight;
+                 const leftPos = Math.random() * Math.max(0, maxLeft);
+                 const topPos = Math.random() * Math.max(0, maxHeight);
+                 splash.style.left = `${leftPos}px`;
+                 splash.style.top = `${topPos}px`;
+                 splash.style.transform = `rotate(${Math.random() * 360}deg)`;
+                 goonImageContainer.appendChild(splash);
+                 setTimeout(() => { if (splash.parentNode && isGoonMode) splash.style.opacity = '0'; }, 30000);
+                 setTimeout(() => { if (splash.parentNode) splash.remove(); }, 32000);
+             }
+
+            // --- Goon Button Logic (Enter Mode) ---
+            if (goonBtn) {
+                 goonBtn.addEventListener('click', (e) => {
+                     e.stopPropagation();
+                     if (!isGoonMode) { isGoonMode = true; body.classList.add('goon-mode-active'); console.log("Entered Goon Mode"); }
+                 });
+             }
+
+             // --- Goon Overlay Click Logic (Spawn Splash & Shake Image) ---
+             if (goonOverlay) {
+                 goonOverlay.addEventListener('click', (event) => {
+                    if (event.target === goonOverlay || event.target === goonImageContainer) {
+                         if (isGoonMode) {
+                             spawnGoonSplash(); // Spawn unlimited splashes
+                             if (mainGoonImage) {
+                                 if (goonImageShakeTimeout) clearTimeout(goonImageShakeTimeout);
+                                 mainGoonImage.classList.remove('shake-goon-image');
+                                 void mainGoonImage.offsetWidth; // Force reflow
+                                 mainGoonImage.classList.add('shake-goon-image');
+                                 goonImageShakeTimeout = setTimeout(() => { if (mainGoonImage) mainGoonImage.classList.remove('shake-goon-image'); }, 300);
+                             }
+                         }
+                    }
+                 });
+             }
+
+             // --- Back Button Logic (Exit Mode) ---
+             if (backBtn) {
+                 backBtn.addEventListener('click', (e) => {
+                     e.stopPropagation();
+                     if (isGoonMode) {
+                         isGoonMode = false;
+                         body.classList.remove('goon-mode-active');
+                         const spamSplashes = goonOverlay.querySelectorAll('.goon-splash');
+                         spamSplashes.forEach(splash => splash.remove());
+                         if(goonImageShakeTimeout) clearTimeout(goonImageShakeTimeout);
+                         if(mainGoonImage) mainGoonImage.classList.remove('shake-goon-image');
+                         console.log("Exited Goon Mode");
+                         checkSections();
+                     }
+                 });
+             }
+
+            // --- Easter Egg on Title Click ---
+            if (mainTitle) { mainTitle.addEventListener('click', (e) => { if(!isGoonMode){ e.stopPropagation(); alert('THE KING REIGNS SUPREME! 👑'); createParticles(e.clientX, e.clientY, 'crown');} }); }
+
+            // --- Initial setup calls ---
+            checkSections();
+            if (audioElement) { updateVolumeSliderBackground(); updateVolumeImageScale(); }
+
+        }); // End DOMContentLoaded
+    </script>
+
+</body>
+</html>
